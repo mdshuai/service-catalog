@@ -26,7 +26,7 @@ import (
 	"github.com/kubernetes-incubator/service-catalog/pkg/controller/injector"
 	"github.com/kubernetes-incubator/service-catalog/pkg/controller/util"
 	"github.com/kubernetes-incubator/service-catalog/pkg/controller/watch"
-	k8swatch "k8s.io/client-go/1.5/pkg/watch"
+	k8swatch "k8s.io/apimachinery/pkg/watch"
 )
 
 // Controller is an instance of the service catalog controller.

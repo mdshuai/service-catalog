@@ -17,14 +17,14 @@ limitations under the License.
 package watch
 
 import (
-	"k8s.io/client-go/1.5/pkg/api/v1"
-	"k8s.io/client-go/1.5/pkg/watch"
+	"k8s.io/client-go/pkg/api/v1"
+	"k8s.io/apimachinery/pkg/watch"
 )
 
 // fakeDynamicResourceClient is a dynamicResourceClient implementation intended for unit tests.
 // it contains a watch.Interface and error that it will always return in its Watch func.
 //
-// The watch.Interface will usually be a (k8s.io/client-go/1.5/pkg/watch).FakeWatcher, which will
+// The watch.Interface will usually be a (k8s.io/apimachinery/pkg/watch).FakeWatcher, which will
 // be driven (i.e. 'Add' func called) from unit tests
 type fakeDynamicResourceClient struct {
 	watchRet    watch.Interface

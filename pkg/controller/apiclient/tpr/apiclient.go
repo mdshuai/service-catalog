@@ -20,7 +20,7 @@ import (
 	"github.com/kubernetes-incubator/service-catalog/pkg/controller/apiclient"
 	"github.com/kubernetes-incubator/service-catalog/pkg/controller/watch"
 	// Need this for gcp auth
-	_ "k8s.io/client-go/1.5/kubernetes"
+	_ "k8s.io/client-go/kubernetes"
 )
 
 type apiClient struct {

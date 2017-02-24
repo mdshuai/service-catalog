@@ -18,7 +18,7 @@ package rest
 
 import (
 	"k8s.io/kubernetes/pkg/api/rest"
-	"k8s.io/kubernetes/pkg/genericapiserver"
+	genericapiserver "k8s.io/apiserver/pkg/server"
 	"k8s.io/kubernetes/pkg/registry"
 
 	"github.com/kubernetes-incubator/service-catalog/pkg/apis/servicecatalog"

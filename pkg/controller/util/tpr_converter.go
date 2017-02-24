@@ -20,7 +20,7 @@ import (
 	"encoding/json"
 	"log"
 
-	"k8s.io/client-go/1.5/pkg/runtime"
+	"k8s.io/apimachinery/pkg/runtime"
 )
 
 // TPRObjectToSCObject converts a Kubernetes Third Party Resource

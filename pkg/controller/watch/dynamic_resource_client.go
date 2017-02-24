@@ -17,9 +17,9 @@ limitations under the License.
 package watch
 
 import (
-	"k8s.io/client-go/1.5/dynamic"
-	"k8s.io/client-go/1.5/pkg/api/v1"
-	"k8s.io/client-go/1.5/pkg/watch"
+	"k8s.io/client-go/dynamic"
+	"k8s.io/client-go/pkg/api/v1"
+	"k8s.io/apimachinery/pkg/watch"
 )
 
 // dynamicResourceClient is an interface that allows callers to watch arbitrary resource types
@@ -30,7 +30,7 @@ import (
 // this interface has two important implementations:
 //
 // - realDynamicResourceClient - a Kubernetes implementation that's based on
-//	 a *(k8s.io/client-go/1.5/dynamic).ResourceClient
+//	 a *(k8s.io/client-go/dynamic).ResourceClient
 // - fakeDynamicResourceClient - a manually-driven implementation that should be used in unit
 //   tests
 type dynamicResourceClient interface {
@@ -38,7 +38,7 @@ type dynamicResourceClient interface {
 }
 
 // realDynamicResourceClient is a dynamicResourceClient implementation that uses a
-// *(k8s.io/client-go/1.5/dynamic).ResourceClient to implement its Watch func
+// *(k8s.io/client-go/dynamic).ResourceClient to implement its Watch func
 type realDynamicResourceClient struct {
 	rc *dynamic.ResourceClient
 }

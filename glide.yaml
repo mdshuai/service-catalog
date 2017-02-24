@@ -8,24 +8,17 @@ import:
 - package: github.com/jteeuwen/go-bindata
 - package: github.com/spf13/cobra
   version: f62e98d28ab7ad31d707ba837a966378465c7b57
-- package: k8s.io/gengo/args
+- package: k8s.io/gengo
+  subpackages:
+  - args
 - package: github.com/kubernetes/repo-infra
   version: 4c4ae2e2e6994e887da16f3c31f495e10062b810
 - package: k8s.io/kubernetes
   version: 6b9a9442855d16e0ff0c02ab0c82b1c1665cccaf
   subpackages:
   - pkg/genericapiserver
+- package: k8s.io/apiserver
 - package: k8s.io/client-go
-  version: "1.5"
-  subpackages:
-  - 1.5/dynamic
-  - 1.5/kubernetes
-  - 1.5/kubernetes/typed/extensions/v1beta1
-  - 1.5/pkg/api
-  - 1.5/pkg/api/unversioned
-  - 1.5/pkg/api/v1
-  - 1.5/pkg/apis/extensions/v1beta1
-  - 1.5/pkg/runtime
-  - 1.5/pkg/util/intstr
-  - 1.5/pkg/watch
-  - 1.5/tools/clientcmd
+  version: master
+- package: k8s.io/apimachinery
+  version: master

@@ -32,10 +32,11 @@ import (
 	"github.com/kubernetes-incubator/service-catalog/pkg/controller"
 	"github.com/kubernetes-incubator/service-catalog/pkg/controller/injector"
 	"github.com/kubernetes-incubator/service-catalog/pkg/controller/watch"
-	"k8s.io/client-go/1.5/dynamic"
-	"k8s.io/client-go/1.5/kubernetes"
-	"k8s.io/client-go/1.5/pkg/api/unversioned"
-	"k8s.io/client-go/1.5/tools/clientcmd"
+	"k8s.io/client-go/dynamic"
+	"k8s.io/client-go/kubernetes"
+	//"k8s.io/client-go/pkg/api/unversioned"
+	unversioned "k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/kubernetes/pkg/healthz"
 )
 

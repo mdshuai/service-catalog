@@ -21,9 +21,9 @@ import (
 	"testing"
 	"time"
 
-	"k8s.io/client-go/1.5/pkg/api/v1"
-	extv1beta1 "k8s.io/client-go/1.5/pkg/apis/extensions/v1beta1"
-	"k8s.io/client-go/1.5/pkg/watch"
+	"k8s.io/client-go/pkg/api/v1"
+	extv1beta1 "k8s.io/client-go/pkg/apis/extensions/v1beta1"
+	"k8s.io/apimachinery/pkg/watch"
 )
 
 func TestThirdPartyWatcher(t *testing.T) {

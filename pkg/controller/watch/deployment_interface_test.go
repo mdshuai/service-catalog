@@ -17,10 +17,10 @@ limitations under the License.
 package watch
 
 import (
-	"k8s.io/client-go/1.5/pkg/api"
-	"k8s.io/client-go/1.5/pkg/apis/extensions/v1beta1"
-	extv1beta1 "k8s.io/client-go/1.5/pkg/apis/extensions/v1beta1"
-	"k8s.io/client-go/1.5/pkg/watch"
+	"k8s.io/client-go/pkg/api"
+	"k8s.io/client-go/pkg/apis/extensions/v1beta1"
+	extv1beta1 "k8s.io/client-go/pkg/apis/extensions/v1beta1"
+	"k8s.io/apimachinery/pkg/watch"
 )
 
 // v1beta1.DeploymentInterface compatible type for use in unit tests

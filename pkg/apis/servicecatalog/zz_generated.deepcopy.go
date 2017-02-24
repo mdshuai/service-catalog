@@ -21,10 +21,11 @@ limitations under the License.
 package servicecatalog
 
 import (
+	conversion "k8s.io/apimachinery/pkg/conversion"
+	runtime "k8s.io/apimachinery/pkg/runtime"
 	api "k8s.io/kubernetes/pkg/api"
 	v1 "k8s.io/kubernetes/pkg/apis/meta/v1"
-	conversion "k8s.io/kubernetes/pkg/conversion"
-	runtime "k8s.io/kubernetes/pkg/runtime"
+	pkg_runtime "k8s.io/kubernetes/pkg/runtime"
 	reflect "reflect"
 )
 
@@ -99,8 +100,6 @@ func DeepCopy_servicecatalog_BindingList(in interface{}, out interface{}, c *con
 					return err
 				}
 			}
-		} else {
-			out.Items = nil
 		}
 		return nil
 	}
@@ -118,16 +117,14 @@ func DeepCopy_servicecatalog_BindingSpec(in interface{}, out interface{}, c *con
 		}
 		if in.Parameters != nil {
 			in, out := &in.Parameters, &out.Parameters
-			*out = make(map[string]runtime.Object)
+			*out = make(map[string]pkg_runtime.Object)
 			for key, val := range *in {
 				if newVal, err := c.DeepCopy(&val); err != nil {
 					return err
 				} else {
-					(*out)[key] = *newVal.(*runtime.Object)
+					(*out)[key] = *newVal.(*pkg_runtime.Object)
 				}
 			}
-		} else {
-			out.Parameters = nil
 		}
 		return nil
 	}
@@ -141,11 +138,7 @@ func DeepCopy_servicecatalog_BindingStatus(in interface{}, out interface{}, c *c
 		if in.Conditions != nil {
 			in, out := &in.Conditions, &out.Conditions
 			*out = make([]BindingCondition, len(*in))
-			for i := range *in {
-				(*out)[i] = (*in)[i]
-			}
-		} else {
-			out.Conditions = nil
+			copy(*out, *in)
 		}
 		return nil
 	}
@@ -190,8 +183,6 @@ func DeepCopy_servicecatalog_BrokerList(in interface{}, out interface{}, c *conv
 					return err
 				}
 			}
-		} else {
-			out.Items = nil
 		}
 		return nil
 	}
@@ -214,11 +205,7 @@ func DeepCopy_servicecatalog_BrokerStatus(in interface{}, out interface{}, c *co
 		if in.Conditions != nil {
 			in, out := &in.Conditions, &out.Conditions
 			*out = make([]BrokerCondition, len(*in))
-			for i := range *in {
-				(*out)[i] = (*in)[i]
-			}
-		} else {
-			out.Conditions = nil
+			copy(*out, *in)
 		}
 		return nil
 	}
@@ -266,8 +253,6 @@ func DeepCopy_servicecatalog_InstanceList(in interface{}, out interface{}, c *co
 					return err
 				}
 			}
-		} else {
-			out.Items = nil
 		}
 		return nil
 	}
@@ -280,16 +265,14 @@ func DeepCopy_servicecatalog_InstanceSpec(in interface{}, out interface{}, c *co
 		*out = *in
 		if in.Parameters != nil {
 			in, out := &in.Parameters, &out.Parameters
-			*out = make(map[string]runtime.Object)
+			*out = make(map[string]pkg_runtime.Object)
 			for key, val := range *in {
 				if newVal, err := c.DeepCopy(&val); err != nil {
 					return err
 				} else {
-					(*out)[key] = *newVal.(*runtime.Object)
+					(*out)[key] = *newVal.(*pkg_runtime.Object)
 				}
 			}
-		} else {
-			out.Parameters = nil
 		}
 		return nil
 	}
@@ -303,11 +286,7 @@ func DeepCopy_servicecatalog_InstanceStatus(in interface{}, out interface{}, c *
 		if in.Conditions != nil {
 			in, out := &in.Conditions, &out.Conditions
 			*out = make([]InstanceCondition, len(*in))
-			for i := range *in {
-				(*out)[i] = (*in)[i]
-			}
-		} else {
-			out.Conditions = nil
+			copy(*out, *in)
 		}
 		return nil
 	}
@@ -331,22 +310,16 @@ func DeepCopy_servicecatalog_ServiceClass(in interface{}, out interface{}, c *co
 					return err
 				}
 			}
-		} else {
-			out.Plans = nil
 		}
 		if in.OSBTags != nil {
 			in, out := &in.OSBTags, &out.OSBTags
 			*out = make([]string, len(*in))
 			copy(*out, *in)
-		} else {
-			out.OSBTags = nil
 		}
 		if in.OSBRequires != nil {
 			in, out := &in.OSBRequires, &out.OSBRequires
 			*out = make([]string, len(*in))
 			copy(*out, *in)
-		} else {
-			out.OSBRequires = nil
 		}
 		return nil
 	}
@@ -365,8 +338,6 @@ func DeepCopy_servicecatalog_ServiceClassList(in interface{}, out interface{}, c
 					return err
 				}
 			}
-		} else {
-			out.Items = nil
 		}
 		return nil
 	}
@@ -381,8 +352,6 @@ func DeepCopy_servicecatalog_ServicePlan(in interface{}, out interface{}, c *con
 			in, out := &in.Bullets, &out.Bullets
 			*out = make([]string, len(*in))
 			copy(*out, *in)
-		} else {
-			out.Bullets = nil
 		}
 		return nil
 	}

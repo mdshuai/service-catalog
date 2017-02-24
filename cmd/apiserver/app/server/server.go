@@ -26,8 +26,8 @@ import (
 
 	"k8s.io/kubernetes/pkg/api"
 	//"k8s.io/kubernetes/pkg/apimachinery/registered"
-	"k8s.io/kubernetes/pkg/genericapiserver"
-	genericserveroptions "k8s.io/kubernetes/pkg/genericapiserver/options"
+	genericapiserver "k8s.io/apiserver/pkg/server"
+	genericserveroptions "k8s.io/apiserver/pkg/server/options"
 
 	"github.com/kubernetes-incubator/service-catalog/pkg/apiserver"
 )
