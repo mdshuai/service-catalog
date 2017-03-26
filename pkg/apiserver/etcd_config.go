@@ -19,6 +19,7 @@ package apiserver
 import (
 	"github.com/golang/glog"
 	"github.com/kubernetes-incubator/service-catalog/pkg/registry/servicecatalog/server"
+	"k8s.io/apiserver/pkg/registry/generic"
 	genericapiserver "k8s.io/apiserver/pkg/server"
 	"k8s.io/apiserver/pkg/server/storage"
 	clientset "k8s.io/client-go/kubernetes"
@@ -79,18 +80,18 @@ func (c completedEtcdConfig) NewServer() (*ServiceCatalogAPIServer, error) {
 	}
 	glog.V(4).Infoln("Created skeleton API server")
 
-	// roFactory := etcdRESTOptionsFactory{
-	// 	deleteCollectionWorkers: c.deleteCollectionWorkers,
-	// 	enableGarbageCollection: true, // JPEELER
-	// 	storageFactory:          c.storageFactory,
-	// 	storageDecorator:        generic.UndecoratedStorage,
-	// }
+	roFactory := etcdRESTOptionsFactory{
+		deleteCollectionWorkers: c.deleteCollectionWorkers,
+		enableGarbageCollection: true,
+		storageFactory:          c.storageFactory,
+		storageDecorator:        generic.UndecoratedStorage,
+	}
 
 	glog.V(4).Infoln("Installing API groups")
 	// default namespace doesn't matter for etcd
 	providers := restStorageProviders("" /* default namespace */, server.StorageTypeEtcd, nil)
 	for _, provider := range providers {
-		groupInfo, err := provider.NewRESTStorage(c.apiResourceConfigSource, c.genericConfig.RESTOptionsGetter)
+		groupInfo, err := provider.NewRESTStorage(c.apiResourceConfigSource, roFactory)
 		if IsErrAPIGroupDisabled(err) {
 			glog.Warningf("Skipping API group %v because it is not enabled", provider.GroupName())
 			continue

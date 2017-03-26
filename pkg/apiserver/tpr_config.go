@@ -80,15 +80,15 @@ func (c *completedTPRConfig) NewServer() (*ServiceCatalogAPIServer, error) {
 	}
 	glog.V(4).Infoln("Created skeleton API server. Installing API groups")
 
-	// JPEELER
-	// roFactory := tprRESTOptionsFactory{
-	// 	storageFactory: c.factory,
-	// }
+	roFactory := tprRESTOptionsFactory{
+		storageFactory: c.factory,
+	}
+
 	providers := restStorageProviders(c.globalNamespace, server.StorageTypeTPR, c.cl)
 	for _, provider := range providers {
 		groupInfo, err := provider.NewRESTStorage(
 			c.apiResourceConfigSource, // genericapiserver.APIResourceConfigSource
-			c.genericConfig.RESTOptionsGetter,
+			roFactory,                 // registry.RESTOptionsGetter
 		)
 		if IsErrAPIGroupDisabled(err) {
 			glog.Warningf("Skipping API group %v because it is not enabled", provider.GroupName())

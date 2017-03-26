@@ -161,7 +161,7 @@ func (o Options) GetStorage(
 			capacity,
 			objectType,
 			resourcePrefix,
-			nil, // JPEELER
+			nil, /* keyFunc for decorator -- looks to be unused everywhere */
 			newListFunc,
 			getAttrsFunc,
 			trigger,

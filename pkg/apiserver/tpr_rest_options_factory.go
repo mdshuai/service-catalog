@@ -17,7 +17,6 @@ limitations under the License.
 package apiserver
 
 import (
-	"github.com/golang/glog"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apiserver/pkg/registry/generic"
 	"k8s.io/apiserver/pkg/server/storage"
@@ -27,10 +26,10 @@ type tprRESTOptionsFactory struct {
 	storageFactory storage.StorageFactory
 }
 
-func (t tprRESTOptionsFactory) NewFor(resource schema.GroupResource) generic.RESTOptions {
+func (t tprRESTOptionsFactory) GetRESTOptions(resource schema.GroupResource) (generic.RESTOptions, error) {
 	storageConfig, err := t.storageFactory.NewConfig(resource)
 	if err != nil {
-		glog.Fatalf("Unable to find storage destination for %v, due to %v", resource, err.Error())
+		return generic.RESTOptions{}, err
 	}
 	// this function should create a RESTOptions that contains a Decorator function to create
 	// a TPR based storage config. This should be done in a follow up to
@@ -40,5 +39,5 @@ func (t tprRESTOptionsFactory) NewFor(resource schema.GroupResource) generic.RES
 	// to have the switching logic to choose between TPR and etcd
 	return generic.RESTOptions{
 		StorageConfig: storageConfig,
-	}
+	}, nil
 }

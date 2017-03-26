@@ -17,7 +17,6 @@ limitations under the License.
 package apiserver
 
 import (
-	"github.com/golang/glog"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apiserver/pkg/registry/generic"
 	"k8s.io/apiserver/pkg/server/storage"
@@ -35,10 +34,10 @@ type etcdRESTOptionsFactory struct {
 }
 
 // NewFor returns the RESTOptions for a particular GroupResource.
-func (f etcdRESTOptionsFactory) NewFor(resource schema.GroupResource) generic.RESTOptions {
+func (f etcdRESTOptionsFactory) GetRESTOptions(resource schema.GroupResource) (generic.RESTOptions, error) {
 	storageConfig, err := f.storageFactory.NewConfig(resource)
 	if err != nil {
-		glog.Fatalf("Unable to find storage destination for %v, due to %v", resource, err.Error())
+		return generic.RESTOptions{}, err
 	}
 
 	return generic.RESTOptions{
@@ -47,5 +46,5 @@ func (f etcdRESTOptionsFactory) NewFor(resource schema.GroupResource) generic.RE
 		DeleteCollectionWorkers: f.deleteCollectionWorkers,
 		EnableGarbageCollection: f.enableGarbageCollection,
 		ResourcePrefix:          f.storageFactory.ResourcePrefix(resource),
-	}
+	}, nil
 }

@@ -25,19 +25,6 @@ import (
 	"k8s.io/apiserver/pkg/storage"
 )
 
-/* JPEELER take out
-type StorageDecorator func(
-	copier runtime.ObjectCopier,
-	config *storagebackend.Config,
-	capacity int,
-	objectType runtime.Object,
-	resourcePrefix string,
-	keyFunc func(obj runtime.Object) (string, error),
-	newListFunc func() runtime.Object,
-	getAttrsFunc storage.AttrFunc,
-	trigger storage.TriggerPublisherFunc) (storage.Interface, factory.DestroyFunc)
-*/
-
 // Options is the set of options necessary for creating etcd-backed storage
 type Options struct {
 	RESTOptions   generic.RESTOptions
