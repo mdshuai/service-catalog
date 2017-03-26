@@ -19,7 +19,7 @@ package server
 import (
 	"fmt"
 
-	genericapiserver "k8s.io/apiserver/pkg/server"
+	genericapiserverstorage "k8s.io/apiserver/pkg/server/storage"
 	"k8s.io/client-go/pkg/api"
 
 	"github.com/golang/glog"
@@ -95,7 +95,6 @@ func runEtcdServer(opts *ServiceCatalogServerOptions) error {
 
 	glog.V(4).Infoln("Creating storage factory")
 	// JPEELER - this definitely needs fixing:
-	// StorageGroupsToEncodingVersion is in storage_versions in k8s
 	// BuildDefaultStorageFactory is in default_storage_factory_builder in k8s
 
 	// The API server stores objects using a particular API version for each
@@ -112,15 +111,15 @@ func runEtcdServer(opts *ServiceCatalogServerOptions) error {
 	//
 	// The default storage factory returns the storage interface for a
 	// particular GroupResource (an (api-group, resource) tuple).
-	storageFactory, err := genericapiserver.BuildDefaultStorageFactory(
+	storageFactory, err := apiserver.NewStorageFactory(
 		etcdOpts.StorageConfig,
-		opts.GenericServerRunOptions.DefaultStorageMediaType,
+		etcdOpts.DefaultStorageMediaType,
 		api.Codecs,
-		genericapiserver.NewDefaultResourceEncodingConfig(),
+		genericapiserverstorage.NewDefaultResourceEncodingConfig(api.Registry),
 		storageGroupsToEncodingVersion,
 		nil, /* group storage version overrides */
 		apiserver.DefaultAPIResourceConfigSource(),
-		opts.GenericServerRunOptions.RuntimeConfig,
+		nil, /* resource config overrides */
 	)
 	if err != nil {
 		glog.Errorf("error creating storage factory: %v", err)
