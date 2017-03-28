@@ -12,6 +12,7 @@ import:
 - package: golang.org/x/text/secure/precis
 - package: github.com/gogo/protobuf/proto
 - package: golang.org/x/net/http2
+- package: github.com/golang/glog
 - package: github.com/golang/protobuf/proto
 - package: gopkg.in/natefinch/lumberjack.v2
 - package: github.com/pkg/errors
