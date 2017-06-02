@@ -147,5 +147,8 @@ func ValidateServiceClassUpdate(new *sc.ServiceClass, old *sc.ServiceClass) fiel
 	allErrs = append(allErrs, ValidateServiceClass(new)...)
 	allErrs = append(allErrs, ValidateServiceClass(old)...)
 
+	fldPath := field.NewPath("metadata")
+	allErrs = apivalidation.ValidateObjectMetaUpdate(&new.ObjectMeta, &old.ObjectMeta, fldPath)
+	allErrs = append(allErrs, apivalidation.ValidateImmutableField(new.ExternalID, old.ExternalID, field.NewPath("externalID"))...)
 	return allErrs
 }
