@@ -53,21 +53,71 @@ func CreateController() controller.Controller {
 	}
 }
 
+const instanceParameterSchemaBytes = `{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "type": "object",
+  "title": "Parameters",
+  "properties": {
+    "name": {
+      "title": "Queue Name",
+      "type": "string",
+      "maxLength": 63,
+      "default": "My Queue"
+    },
+    "email": {
+      "title": "Email",
+      "type": "string",
+      "pattern": "^\\S+@\\S+$",
+      "description": "Email address for alerts."
+    },
+    "protocol": {
+      "title": "Protocol",
+      "type": "string",
+      "default": "Java Message Service (JMS) 1.1",
+      "enum": [
+        "Java Message Service (JMS) 1.1",
+        "Transmission Control Protocol (TCP)",
+        "Advanced Message Queuing Protocol (AMQP) 1.0"
+      ]
+    },
+    "secure": {
+      "title": "Enable security",
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "name",
+    "protocol"
+  ]
+}`
+
 func (c *userProvidedController) Catalog() (*brokerapi.Catalog, error) {
+	schema := make(map[string]interface{})
+	if err := json.Unmarshal([]byte(instanceParameterSchemaBytes), &schema); err != nil {
+		fmt.Println("Error unmarshalling schema bytes: %v", err)
+	}
 	return &brokerapi.Catalog{
 		Services: []*brokerapi.Service{
 			{
 				Name:        "user-provided-service",
 				ID:          "4f6e6cf6-ffdd-425f-a2c7-3c9258ad2468",
 				Description: "A user provided service",
-				Plans: []brokerapi.ServicePlan{{
-					Name:        "default",
-					ID:          "86064792-7ea2-467b-af93-ac9694d96d52",
-					Description: "Sample plan description",
-					Free:        true,
-				},
-				},
-				Bindable: true,
+				Bindable:    true,
+				Plans: []brokerapi.ServicePlan{
+					{
+						Name:        "default",
+						ID:          "86064792-7ea2-467b-af93-ac9694d96d52",
+						Description: "Sample plan description",
+						Free:        true,
+						Schemas: &brokerapi.Schemas{
+							ServiceInstances: &brokerapi.ServiceInstanceSchema{
+								Create: &brokerapi.InputParameters{
+									Parameters: schema,
+								},
+							},
+						},
+					}},
 			},
 		},
 	}, nil
@@ -142,3 +192,4 @@ func (c *userProvidedController) UnBind(instanceID string, bindingID string) err
 	// Since we don't persist the binding, there's nothing to do here.
 	return nil
 }
+
